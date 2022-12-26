@@ -1,0 +1,15 @@
+.statistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.statList {
+  display: flex;
+  text-align: center;
+}
+.statList li {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
