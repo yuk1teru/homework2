@@ -1,32 +1,53 @@
 import './App.css';
-// import Profile from './Profile/Profile';
-// import Statistics from './Statistics/Statistics';
-// import FriendList from './FriendList/FriendList';
-// import TransactionHistory from './TransactionHistory/TransactionHistory';
+import { Component } from 'react';
+import Statistic from './Statistic/';
+import FeedbackOptions from './FeedbackOptions/';
+import Section from './Section/';
 
-// import user from '../user.json';
-// import data from '../data.json';
-// import friends from '../friends.json';
-// import transactions from '../transactions.json';
-// import Counter from './Counter/Counter';
+class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
-function App() {
-  return (
-    <>
-      {/* <Profile
-        username={user.username}
-        tag={user.tag}
-        location={user.location}
-        avatar={user.avatar}
-        stats={user.stats}
-      />
-      <Statistics title={'Upload stats'} stats={data} />
-      <Statistics stats={data} />
-      <FriendList friends={friends} />
-      <TransactionHistory transactions={transactions} />
-      <Counter /> */}
-    </>
-  );
+  handleRating = e => {
+    this.setState(prevState => {
+      const { name } = e.target;
+      return {
+        [name]: prevState[name] + 1,
+      };
+    });
+  };
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+  countPositiveFeedbackPercentage = () => {
+    const { good, neutral, bad } = this.state;
+    return (
+      `${((good + neutral) / (good + neutral + bad)) * 100}`.split('.')[0] + `%`
+    );
+  };
+  render() {
+    const { good, neutral, bad } = this.state;
+    return (
+      <>
+        <Section title="Оцініть обслуговування в нашому кафе">
+          <FeedbackOptions onClickHandle={this.handleRating} />
+        </Section>
+        <Section title="Статистика">
+          <Statistic
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={this.countTotalFeedback}
+            positivePercentage={this.countPositiveFeedbackPercentage}
+          />
+        </Section>
+      </>
+    );
+  }
 }
 
 export default App;
