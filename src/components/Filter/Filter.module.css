@@ -1,0 +1,7 @@
+.filter {
+  max-width: 300px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
